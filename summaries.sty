@@ -1,0 +1,130 @@
+\ProvidesPackage{summaries}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=30mm,
+ top=30mm,
+ right=30mm,
+ bottom=30mm,
+ }
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage{enumerate}
+\usepackage[lining]{InriaSans}
+\renewcommand*\oldstylenums[1]{{\fontfamily{InriaSans-OsF}\selectfont #1}}
+%% The font package uses mweights.sty which has som issues with the
+%% \normalfont command. The following two lines fixes this issue.
+\let\oldnormalfont\normalfont
+\def\normalfont{\oldnormalfont\mdseries}
+
+\usepackage[many]{tcolorbox}    	% for COLORED BOXES (tikz and xcolor included)
+\tcbset{
+    sharp corners,
+    colback = white,
+    before skip = 0.2cm,    % add extra space before the box
+    after skip = 0.5cm      % add extra space after the box
+}                           % setting global options for tcolorbox
+
+\definecolor{bluedark}{HTML}{0087cc}
+\definecolor{bluelight}{HTML}{EDF9FF}
+\definecolor{red-dark}{HTML}{FF3731}
+\definecolor{red-light}{HTML}{FFF0F0}
+\definecolor{grey-dark}{HTML}{546E7A}
+\definecolor{grey-light}{HTML}{ECF2F5}
+\definecolor{yellow-dark}{HTML}{D69B04}
+\definecolor{yellow-light}{HTML}{fefde6}
+
+\newtcolorbox{definition-box}{
+    sharpish corners, % better drop shadow
+    colback = bluelight, 
+    colframe = bluedark, 
+    boxrule = 0pt, 
+    toprule = 2.5pt, % top rule weight
+    enhanced,
+    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options} 
+}
+
+\newtcolorbox{important-box}{
+    sharpish corners, % better drop shadow
+    colback = red-light, 
+    colframe = red-dark, 
+    boxrule = 0pt, 
+    %toprule = 2.5pt, % top rule weight
+    leftrule = 2.5pt,
+    enhanced,
+    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options} 
+}
+
+\newtcolorbox{legal-text-box}{
+    sharpish corners, % better drop shadow
+    colback = grey-light, 
+    colframe = grey-dark, 
+    boxrule = 0pt, 
+    toprule = 2.5pt, % top rule weight
+    enhanced,
+    watermark text=§,
+    watermark zoom=0.8,
+    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options} 
+}
+
+\newtcolorbox{schemata-box}{
+    sharpish corners, % better drop shadow
+    colback = yellow-light, 
+    colframe = yellow-dark, 
+    boxrule = 0pt, 
+    toprule = 2.5pt, % top rule weight
+    enhanced,
+    fuzzy shadow = {0pt}{-2pt}{-0.5pt}{0.5pt}{black!35} % {xshift}{yshift}{offset}{step}{options} 
+}
+
+\newcounter{definitions}
+
+\newenvironment{definition}[1]{
+\addtocounter{definitions}{1}
+\begin{definition-box}
+\color{bluedark}
+\textbf{Definition \thedefinitions:} #1
+\medskip \\
+\color{black}
+}{
+\end{definition-box}
+}
+\newenvironment{legal-text}[1]{
+\begin{legal-text-box}
+\color{grey-dark}
+\textbf{Auszug #1:}
+\small
+\medskip \\
+\color{black}
+}{
+\normalsize
+\end{legal-text-box}
+}
+
+\newcounter{schematas}
+
+\newenvironment{schemata}[1]{
+\addtocounter{schematas}{1}
+\begin{schemata-box}
+\color{yellow-dark}
+
+\begin{center}
+\textbf{Schema \theschematas:} #1
+\end{center}
+
+\color{black}
+\medskip
+}{
+\end{schemata-box}
+}
+
+%Setting up pagestyle:%
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{\doctitle}}
+\rhead{\topic}
+\rfoot{Seite \thepage}
+\lfoot{\license}
