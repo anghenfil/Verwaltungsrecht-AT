@@ -11,6 +11,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{enumerate}
 \usepackage[lining]{InriaSans}
@@ -128,3 +129,12 @@
 \rhead{\topic}
 \rfoot{Seite \thepage}
 \lfoot{\license}
+
+%Example: \ltext*{VwGO}{52}{I. 1. Alt}
+%Example: \ltext{VwGO}{53}{ff.}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\ltext}{smmm}{
+	\exp_args:Nx \href{https://www.gesetze-im-internet.de/\str_lowercase:n {#2}/__#3.html}{\IfBooleanF{#1}{§}§ #3 #4 #2}%
+}
+\ExplSyntaxOff
